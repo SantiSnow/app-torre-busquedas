@@ -26,9 +26,12 @@
         <h1>Mi App Torre</h1>
     </div>
     <div class="row">
+        <h2>Buscar oportunidades</h2>
+    </div>
+    <div class="row">
         <div class="form-group col-md-9">
-            <label for="name">Name</label>
-            <input type="text" id="nombreIngresado" name="name" placeholder="Enter the name here" class="form-control" />
+            <label for="id">ID:</label>
+            <input type="text" id="idIngresado" name="id" placeholder="Enter the ID here" class="form-control" />
             <br />
             <button type="submit" class="btn btn-primary" onclick="miFuncion()">Search</button>
             <button type="submit" class="btn btn-danger" onclick="borrar()">Borrar</button>
@@ -38,54 +41,60 @@
         <h2>Resultados de su busqueda:</h2>
         <br />
 
-        <strong>Nombre: </strong><div class="col-md-9" id="nombre"></div><br />
-        <strong>Id: </strong><div class="col-md-9" id="id"></div><br />
-        <strong>Titulo: </strong><div class="col-md-9" id="titulo"></div><br />
-        <strong>Fecha creación del perfil: </strong><div class="col-md-9" id="fecha"></div><br />
-        <strong>Ubicación: </strong><div class="col-md-9" id="ubicacion"></div><br />
-        <strong>Zona horaria: </strong><div class="col-md-9" id="zonaHorario"></div><br />
-        <strong>Resumen: </strong><div class="col-md-9" id="resumen"></div><br />
+        <strong>Título de la vacante: </strong><div class="col-md-9" id="objective"></div>
+        <strong>Vacante: </strong><div class="col-md-9" id="opportunity"></div>
+        <strong>Salario mínimo: </strong><div class="col-md-9" id="salario"></div>
+        <strong>Salario máximo: </strong><div class="col-md-9" id="salarioMax"></div>
+        <strong>Id: </strong><div class="col-md-9" id="id"></div>
+        <strong>Modalidad: </strong><div class="col-md-9" id="lugar"></div>
+        <strong>Estado: </strong><div class="col-md-9" id="status"></div>
+        <strong>Fecha de finalización: </strong><div class="col-md-9" id="deadline"></div>
     </div>
 </div>
 
 
 
     <script>
+
         function miFuncion(){
-            var nombreIngresado = $('#nombreIngresado').val();
+            var idIngresado = $('#idIngresado').val();
                 var xmlhttp = new XMLHttpRequest();
             
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         respuesta = JSON.parse(this.responseText);
-                        //console.log(respuesta);
-                        objeto = JSON.parse(respuesta.body);
-                        //console.log(objeto);
-
-                        //console.log(objeto.person.professionalHeadline);
-
-                        $('#nombre').append(objeto.person.name);
-                        $('#id').append(objeto.person.id);
-                        $('#titulo').append(objeto.person.professionalHeadline);
-                        $('#fecha').append(objeto.person.created);
-                        $('#ubicacion').append(objeto.person.location.name);
-                        $('#zonaHorario').append(objeto.person.location.timezone);
-                        $('#resumen').append(objeto.person.summaryOfBio);
+                        console.log(respuesta);
+                        
+                        
+                        $('#opportunity').append(objeto.opportunity);
+                        $('#id').append(objeto.id);
+                        $('#salario').append(objeto.compensation.currency + " " + objeto.compensation.minAmount)
+                        $('#salarioMax').append(objeto.compensation.currency + " " + objeto.compensation.maxAmount)
+                        $('#status').append(objeto.status);
+                        if(objeto.place.remote == true){
+                            $('#lugar').append("Remoto");
+                        }
+                        else{
+                            $('#lugar').append("Presencial");
+                        }
+                        $('#objective').append(objeto.objective);
+                        $('#deadline').append(objeto.deadline);
                     }
                 };
-            xmlhttp.open("GET", "http://localhost:3000/api/" + nombreIngresado, true);
-            xmlhttp.send();      
-
+            xmlhttp.open("POST", "http://localhost:3000/api/oportunities/" + idIngresado, true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send(idIngresado);
         }
 
         function borrar(){
-            $('#nombre').text("");
+            $('#opportunity').text("");
             $('#id').text("");
-            $('#titulo').text("");
-            $('#fecha').text("");
-            $('#ubicacion').text("");
-            $('#zonaHorario').text("");
-            $('#resumen').text("");
+            $('#salario').text("");
+            $('#salarioMax').text("");
+            $('#status').text("");
+            $('#lugar').text("");
+            $('#objective').text("");
+            $('#deadline').text("");
         }
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

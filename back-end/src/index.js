@@ -1,9 +1,9 @@
 var express = require('express');
 var request = require('request'); 
 const cors = require('cors');
+var bodyParser = require('body-parser');
 
 var app = express();
-
 
 /* CORS ENABLE */
 app.use((req, res, next) => {
@@ -17,6 +17,9 @@ app.use((req, res, next) => {
 });
 /* CORS ENABLE */
 
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //rutas
 app.get('/api/oportunities/:id', function(req, res){
@@ -33,16 +36,20 @@ app.get('/api/:username', function(req, res){
     });
 });
 
-//get
-//https://torre.co/api/opportunities/JWO8X4wQ
-//https://torre.bio/api/bios/$username
+app.post('/api/oportunities/:id', function(req, res){
+    var id = req.params.id;
+    
+    request("https://search.torre.co/opportunities/_search/?" + id, function(err, body){
+        res.send(body);
+    });
+});
 
+app.post('/api/personas/:nombre', function(req, res){
+    var id = req.params.nombre;
+    request("https://search.torre.co/people/_search/?" + id, function(err, body){
+        res.send(body);
+    });
+});
 
-/* post
-
- https://search.torre.co/opportunities/_search/?[offset=$offset&size=$size&aggregate=$aggregate] 
-
- https://search.torre.co/people/_search/?[offset=$offset&size=$size&aggregate=$aggregate]
- */
 
 app.listen(3000);

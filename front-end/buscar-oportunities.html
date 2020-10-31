@@ -16,10 +16,7 @@
           <a class="nav-link" href="buscar-oportunities.html">Buscar oportunidades</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          <a class="nav-link" href="buscar-ops-post.html">Busqueda POST oportunidades</a>
         </li>
       </ul>
       <br />
@@ -34,7 +31,7 @@
     <div class="row">
         <div class="form-group col-md-9">
             <label for="name">ID:</label>
-            <input type="text" id="nombre-ingresado" name="name" placeholder="Enter the ID here" class="form-control" />
+            <input type="text" id="iDingresado" name="name" placeholder="Enter the ID here" class="form-control" />
             <br />
             <button type="submit" class="btn btn-primary" onclick="miFuncion()">Search</button>
             <button type="submit" class="btn btn-danger" onclick="borrar()">Borrar</button>
@@ -59,7 +56,7 @@
 
     <script>
         function miFuncion(){
-            var idIngresado = $('#nombre-ingresado').val();
+            var idIngresado = $('#iDingresado').val();
                 var xmlhttp = new XMLHttpRequest();
             
                 xmlhttp.onreadystatechange = function() {
