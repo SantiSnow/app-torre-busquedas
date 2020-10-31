@@ -13,7 +13,7 @@
           <a class="nav-link active" href="index.html">Buscar personas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="buscar-oportunities.html">Buscar oportunidades</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
@@ -37,17 +37,21 @@
             <input type="text" id="nombre-ingresado" name="name" placeholder="Enter the ID here" class="form-control" />
             <br />
             <button type="submit" class="btn btn-primary" onclick="miFuncion()">Search</button>
+            <button type="submit" class="btn btn-danger" onclick="borrar()">Borrar</button>
         </div>
     </div>
     <div>
         <h2>Resultados de su busqueda:</h2>
         <br />
 
-        <div class="col-md-9" id="objective"><strong>Objective: </strong></div>
-        <div class="col-md-9" id="opportunity"><strong>Opportunity: </strong></div>
-        <div class="col-md-9" id="id"><strong>Id: </strong></div>
-        <div class="col-md-9" id="status"><strong>Status: </strong></div>
-        <div class="col-md-9" id="deadline"><strong>Deadline: </strong></div>
+        <strong>Título de la vacante: </strong><div class="col-md-9" id="objective"></div>
+        <strong>Vacante: </strong><div class="col-md-9" id="opportunity"></div>
+        <strong>Salario mínimo: </strong><div class="col-md-9" id="salario"></div>
+        <strong>Salario máximo: </strong><div class="col-md-9" id="salarioMax"></div>
+        <strong>Id: </strong><div class="col-md-9" id="id"></div>
+        <strong>Modalidad: </strong><div class="col-md-9" id="lugar"></div>
+        <strong>Estado: </strong><div class="col-md-9" id="status"></div>
+        <strong>Fecha de finalización: </strong><div class="col-md-9" id="deadline"></div>
     </div>
 </div>
 
@@ -61,13 +65,21 @@
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         respuesta = JSON.parse(this.responseText);
-                        console.log(respuesta);
+                        //console.log(respuesta);
                         objeto = JSON.parse(respuesta.body);
-                        console.log(objeto);
+                        //console.log(objeto);
                         
                         $('#opportunity').append(objeto.opportunity);
                         $('#id').append(objeto.id);
+                        $('#salario').append(objeto.compensation.currency + " " + objeto.compensation.minAmount)
+                        $('#salarioMax').append(objeto.compensation.currency + " " + objeto.compensation.maxAmount)
                         $('#status').append(objeto.status);
+                        if(objeto.place.remote == true){
+                            $('#lugar').append("Remoto");
+                        }
+                        else{
+                            $('#lugar').append("Presencial");
+                        }
                         $('#objective').append(objeto.objective);
                         $('#deadline').append(objeto.deadline);
                     }
@@ -75,6 +87,17 @@
             xmlhttp.open("GET", "http://localhost:3000/api/oportunities/" + idIngresado, true);
             xmlhttp.send();      
 
+        }
+
+        function borrar(){
+            $('#opportunity').text("");
+            $('#id').text("");
+            $('#salario').text("");
+            $('#salarioMax').text("");
+            $('#status').text("");
+            $('#lugar').text("");
+            $('#objective').text("");
+            $('#deadline').text("");
         }
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

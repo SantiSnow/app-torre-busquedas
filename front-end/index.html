@@ -13,7 +13,7 @@
           <a class="nav-link active" href="index.html">Buscar personas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="buscar-oportunities.html">Buscar oportunidades</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
@@ -34,19 +34,20 @@
             <input type="text" id="nombreIngresado" name="name" placeholder="Enter the name here" class="form-control" />
             <br />
             <button type="submit" class="btn btn-primary" onclick="miFuncion()">Search</button>
+            <button type="submit" class="btn btn-danger" onclick="borrar()">Borrar</button>
         </div>
     </div>
     <div>
         <h2>Resultados de su busqueda:</h2>
         <br />
 
-        <div class="col-md-9" id="nombre"><strong>Nombre: </strong></div>
-        <div class="col-md-9" id="id"><strong>Id: </strong></div>
-        <div class="col-md-9" id="titulo"><strong>Titulo: </strong></div>
-        <div class="col-md-9" id="fecha"><strong>Fecha: </strong></div>
-        <div class="col-md-9" id="ubicacion"><strong>Ubicación: </strong></div>
-        <div class="col-md-9" id="zonaHorario"><strong>Zona horaria: </strong></div>
-        <div class="col-md-9" id="resumen"><strong>Resumen: </strong></div>
+        <strong>Nombre: </strong><div class="col-md-9" id="nombre"></div><br />
+        <strong>Id: </strong><div class="col-md-9" id="id"></div><br />
+        <strong>Titulo: </strong><div class="col-md-9" id="titulo"></div><br />
+        <strong>Fecha creación del perfil: </strong><div class="col-md-9" id="fecha"></div><br />
+        <strong>Ubicación: </strong><div class="col-md-9" id="ubicacion"></div><br />
+        <strong>Zona horaria: </strong><div class="col-md-9" id="zonaHorario"></div><br />
+        <strong>Resumen: </strong><div class="col-md-9" id="resumen"></div><br />
     </div>
 </div>
 
@@ -66,8 +67,7 @@
 
                         //console.log(objeto.person.professionalHeadline);
 
-                        $('#parrafo').append(objeto.person.name);
-                        console.log(objeto.person.name);
+                        $('#nombre').append(objeto.person.name);
                         $('#id').append(objeto.person.id);
                         $('#titulo').append(objeto.person.professionalHeadline);
                         $('#fecha').append(objeto.person.created);
@@ -79,6 +79,16 @@
             xmlhttp.open("GET", "http://localhost:3000/api/" + nombreIngresado, true);
             xmlhttp.send();      
 
+        }
+
+        function borrar(){
+            $('#nombre').text("");
+            $('#id').text("");
+            $('#titulo').text("");
+            $('#fecha').text("");
+            $('#ubicacion').text("");
+            $('#zonaHorario').text("");
+            $('#resumen').text("");
         }
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

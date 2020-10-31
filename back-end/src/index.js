@@ -19,26 +19,6 @@ app.use((req, res, next) => {
 
 
 //rutas
-app.get('/', function (req, res) {
-    res.json(
-        { "Mensaje": "Bienvenido"}
-    );
-});
-
-app.get('/user/:id', function (req, res) {
-    res.json(
-        { "Id": req.params.id}
-    );
-});
-
-
-
-app.get('/api', function(req, res){
-    request("https://bio.torre.co/api/bios/torrenegra", function(err, body){
-        res.send(body);
-    });
-});
-
 app.get('/api/oportunities/:id', function(req, res){
     var id = req.params.id;
     request("https://torre.co/api/opportunities/" + id, function(err, body){
