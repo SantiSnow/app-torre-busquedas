@@ -18,6 +18,9 @@
         <li class="nav-item">
           <a class="nav-link" href="buscar-ops-post.html">Busqueda POST oportunidades</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="buscar-personas-post.html">Busqueda POST personas</a>
+          </li>
       </ul>
       <br />
 
@@ -26,9 +29,12 @@
         <h1>Mi App Torre</h1>
     </div>
     <div class="row">
+        <h2>Buscar personas</h2>
+    </div>
+    <div class="row">
         <div class="form-group col-md-9">
-            <label for="name">Name</label>
-            <input type="text" id="nombreIngresado" name="name" placeholder="Enter the name here" class="form-control" />
+            <label for="id">Nombre:</label>
+            <input type="text" id="idIngresado" name="id" placeholder="Enter the name here" class="form-control" />
             <br />
             <button type="submit" class="btn btn-primary" onclick="miFuncion()">Search</button>
             <button type="submit" class="btn btn-danger" onclick="borrar()">Borrar</button>
@@ -51,15 +57,17 @@
 
 
     <script>
+
         function miFuncion(){
-            var nombreIngresado = $('#nombreIngresado').val();
+            var idIngresado = $('#idIngresado').val();
                 var xmlhttp = new XMLHttpRequest();
             
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         respuesta = JSON.parse(this.responseText);
-                        objeto = JSON.parse(respuesta.body);
-
+                        console.log(respuesta);
+                        
+                        
                         $('#nombre').append(objeto.person.name);
                         $('#id').append(objeto.person.id);
                         $('#titulo').append(objeto.person.professionalHeadline);
@@ -69,19 +77,20 @@
                         $('#resumen').append(objeto.person.summaryOfBio);
                     }
                 };
-            xmlhttp.open("GET", "http://localhost:3000/api/" + nombreIngresado, true);
-            xmlhttp.send();      
-
+            xmlhttp.open("POST", "http://localhost:3000/api/oportunities/" + idIngresado, true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send(idIngresado);
         }
 
         function borrar(){
-            $('#nombre').text("");
+            $('#opportunity').text("");
             $('#id').text("");
-            $('#titulo').text("");
-            $('#fecha').text("");
-            $('#ubicacion').text("");
-            $('#zonaHorario').text("");
-            $('#resumen').text("");
+            $('#salario').text("");
+            $('#salarioMax').text("");
+            $('#status').text("");
+            $('#lugar').text("");
+            $('#objective').text("");
+            $('#deadline').text("");
         }
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
