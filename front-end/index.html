@@ -31,9 +31,9 @@
     <div class="row">
         <div class="form-group col-md-9">
             <label for="name">Name</label>
-            <input type="text" name="name" placeholder="Enter the name here" class="form-control" />
+            <input type="text" id="nombreIngresado" name="name" placeholder="Enter the name here" class="form-control" />
             <br />
-            <button class="btn btn-primary" id="botonBuscar" onclick="buscar()">Search</button>
+            <button type="submit" class="btn btn-primary" onclick="miFuncion()">Search</button>
         </div>
     </div>
     <div>
@@ -53,30 +53,32 @@
 
 
     <script>
+        function miFuncion(){
+            var nombreIngresado = $('#nombreIngresado').val();
+                var xmlhttp = new XMLHttpRequest();
+            
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        respuesta = JSON.parse(this.responseText);
+                        //console.log(respuesta);
+                        objeto = JSON.parse(respuesta.body);
+                        //console.log(objeto);
 
-        function buscar(){
-            var xmlhttp = new XMLHttpRequest();
-        
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    respuesta = JSON.parse(this.responseText);
-                    console.log(respuesta);
-                    objeto = JSON.parse(respuesta.body);
-                    console.log(objeto);
+                        //console.log(objeto.person.professionalHeadline);
 
-                    console.log(objeto.person.professionalHeadline);
+                        $('#parrafo').append(objeto.person.name);
+                        console.log(objeto.person.name);
+                        $('#id').append(objeto.person.id);
+                        $('#titulo').append(objeto.person.professionalHeadline);
+                        $('#fecha').append(objeto.person.created);
+                        $('#ubicacion').append(objeto.person.location.name);
+                        $('#zonaHorario').append(objeto.person.location.timezone);
+                        $('#resumen').append(objeto.person.summaryOfBio);
+                    }
+                };
+            xmlhttp.open("GET", "http://localhost:3000/api/" + nombreIngresado, true);
+            xmlhttp.send();      
 
-                    $('#parrafo').append(objeto.person.name);
-                    $('#id').append(objeto.person.id);
-                    $('#titulo').append(objeto.person.professionalHeadline);
-                    $('#fecha').append(objeto.person.created);
-                    $('#ubicacion').append(objeto.person.location.name);
-                    $('#zonaHorario').append(objeto.person.location.timezone);
-                    $('#resumen').append(objeto.person.summaryOfBio);
-                }
-            };
-            xmlhttp.open("GET", "http://localhost:3000/api", true);
-            xmlhttp.send();
         }
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

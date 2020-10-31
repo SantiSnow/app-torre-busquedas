@@ -40,8 +40,8 @@ app.get('/api', function(req, res){
 });
 
 app.get('/api/oportunities/:id', function(req, res){
-    var id = req.body.id;
-    request("https://torre.co/api/opportunities/:id", function(err, body){
+    var id = req.params.id;
+    request("https://torre.co/api/opportunities/" + id, function(err, body){
         res.send(body);
     });
 });
@@ -54,7 +54,7 @@ app.get('/api/:username', function(req, res){
 });
 
 //get
-//https://torre.co/api/opportunities/$id 
+//https://torre.co/api/opportunities/JWO8X4wQ
 //https://torre.bio/api/bios/$username
 
 
