@@ -25,22 +25,30 @@ app.get('/', function (req, res) {
     );
 });
 
+app.get('/user/:id', function (req, res) {
+    res.json(
+        { "Id": req.params.id}
+    );
+});
+
+
+
 app.get('/api', function(req, res){
     request("https://bio.torre.co/api/bios/torrenegra", function(err, body){
         res.send(body);
     });
 });
 
-app.get('/api/buscar', function(req, res){
+app.get('/api/oportunities/:id', function(req, res){
     var id = req.body.id;
     request("https://torre.co/api/opportunities/:id", function(err, body){
         res.send(body);
     });
 });
 
-app.get('/api/buscar', function(req, res){
-    var username = req.body.username;
-    request("https://torre.bio/api/bios/:username", function(err, body){
+app.get('/api/:username', function(req, res){
+    var name = req.params.username;
+    request("https://torre.bio/api/bios/" + name, function(err, body){
         res.send(body);
     });
 });
